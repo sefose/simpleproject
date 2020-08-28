@@ -12,6 +12,7 @@ services:
       - simplebackend
     networks:
       - frontnet
+    stdin_open: true
 
   simplebackend:
     container_name: SimpleBackend

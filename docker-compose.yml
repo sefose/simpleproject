@@ -24,7 +24,8 @@ services:
     expose:
       - "8080"
     environment:
-      
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL5InnoDBDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/simpleapp
       SPRING_DATASOURCE_USERNAME: simpleapp
       SPRING_DATASOURCE_PASSWORD: simpleapp

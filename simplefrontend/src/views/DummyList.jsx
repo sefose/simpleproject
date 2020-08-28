@@ -6,12 +6,17 @@ const DummyList = () => {
   const [dummies, setDummies] = useState([]);
 
   useEffect(() => {
-    findAllDummies().then((resp) => setDummies(resp.data));
-  }, [findAllDummies, setDummies]);
+    findAllDummies().then((resp) => {
+      console.log("resp", resp)
+      setDummies(resp.data)}
+      ).catch(
+        error => console.log('error', error)
+      );
+  }, [setDummies]);
 
   return (
-    <div>
-      {dummies.map((dummy) => (
+    <div className="">
+      {dummies.map(dummy => (
         <DummyElement dummy={dummy} key={dummy.id}></DummyElement>
       ))}
     </div>

@@ -34,7 +34,7 @@ public class DummyController {
 
     @GetMapping("/dummy")
     public ResponseEntity<Collection<DummyDto>> getDummies() {
-        return new ResponseEntity<>(dummyService.findAll(), HttpStatus.FOUND);
+        return new ResponseEntity<>(dummyService.findAll(), HttpStatus.OK);
     }
 
     

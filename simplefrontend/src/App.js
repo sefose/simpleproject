@@ -1,16 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import DummyList from './views/DummyList';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <>
+    <ul class="nav justify-content-center">
+    <li class="nav-item">
+      <h3>Dummys ahead</h3>
+    </li>
+  </ul>
         <DummyList></DummyList>
-      </header>
-    </div>
+</>
   );
 }
 

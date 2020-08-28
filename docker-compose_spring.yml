@@ -1,0 +1,54 @@
+version: "3.3"
+
+services:
+  simplefrontend:
+    container_name: SimpleFrontend
+    build:
+      context: simplefrontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - simplebackend_spring
+    networks:
+      - frontnet
+    stdin_open: true
+
+  simplebackend_spring:
+    container_name: simplebackend_spring
+    build:
+      context: simplebackend_spring
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/dockerapp
+      SPRING_DATASOURCE_USERNAME: dockerapp
+      SPRING_DATASOURCE_PASSWORD: dockerapp
+    depends_on:
+      - db
+    networks:
+      - frontnet
+      - backnet
+
+  db:
+    container_name: mysql-db
+    image: mysql:5.7
+    ports:
+      - 3306:3006
+    environment:
+      MYSQL_DATABASE: simpleapp
+      MYSQL_USER: simpleapp
+      MYSQL_PASSWORD: simpleapp
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
+
+networks:
+  frontnet:
+  backnet:

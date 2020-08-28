@@ -1,0 +1,47 @@
+version: "3.3"
+
+services:
+  simplefrontend:
+    container_name: SimpleFrontend
+    build:
+      context: simplefrontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - simplebackend
+    networks:
+      - frontnet
+
+  simplebackend:
+    container_name: SimpleBackend
+    build:
+      context: simplebackend
+      dockerfile: Dockerfile
+    ports:
+      - 3005:3000
+    depends_on:
+      - db
+    networks:
+      - frontnet
+      - backnet
+
+  db:
+    container_name: mysql-db
+    image: mysql:5.7
+    ports:
+      - 3306:3006
+    environment:
+      MYSQL_DATABASE: simpleapp
+      MYSQL_USER: simpleapp
+      MYSQL_PASSWORD: simpleapp
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
+
+networks:
+  frontnet:
+  backnet:

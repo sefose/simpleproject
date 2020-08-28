@@ -9,41 +9,30 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - simplebackend
+      - simplebackend_spring
     networks:
       - frontnet
     stdin_open: true
 
-  simplebackend:
-    container_name: SimpleBackend
+  simplebackend_spring:
+    container_name: simplebackend_spring
     build:
-      context: simplebackend
+      context: simplebackend_spring
       dockerfile: Dockerfile
     ports:
-      - 3005:3000
+      - "8080:8080"
+    expose:
+      - "8080"
+    environment:
+      
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/simpleapp
+      SPRING_DATASOURCE_USERNAME: simpleapp
+      SPRING_DATASOURCE_PASSWORD: simpleapp
     depends_on:
       - db
     networks:
       - frontnet
       - backnet
-
-  # simplespring:
-  #   container_name: simplespring
-  #   build:
-  #     context: opinion-poll-restful-web-services
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8080:8080"
-  #   expose:
-  #     - "8080"
-  #   environment:
-  #     SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/dockerapp
-  #     SPRING_DATASOURCE_USERNAME: dockerapp
-  #     SPRING_DATASOURCE_PASSWORD: dockerapp
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - backend
 
   db:
     container_name: mysql-db
@@ -57,6 +46,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - db-data:/var/lib/mysql
+    networks: 
+      - backnet
 
 volumes:
   db-data:

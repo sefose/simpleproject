@@ -26,24 +26,24 @@ services:
     networks:
       - frontnet
       - backnet
-  
-  simplespring: 
-    container_name: simplespring
-    build:
-      context: opinion-poll-restful-web-services 
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080" 
-    expose:
-      - "8080"
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/dockerapp
-      SPRING_DATASOURCE_USERNAME: dockerapp
-      SPRING_DATASOURCE_PASSWORD: dockerapp     
-    depends_on: 
-      - db
-    networks: 
-      - backend
+
+  # simplespring:
+  #   container_name: simplespring
+  #   build:
+  #     context: opinion-poll-restful-web-services
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8080:8080"
+  #   expose:
+  #     - "8080"
+  #   environment:
+  #     SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/dockerapp
+  #     SPRING_DATASOURCE_USERNAME: dockerapp
+  #     SPRING_DATASOURCE_PASSWORD: dockerapp
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - backend
 
   db:
     container_name: mysql-db

@@ -1,6 +1,7 @@
 package de.f73.simplebackend.service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,15 @@ public class DummyService {
 
 	public Collection<DummyDto> findAll() {
 		return dummyEntityRepository.findAll().stream().map(this::getDummyDtoFrom).collect(Collectors.toList());
+	}
+
+	public boolean delete(Long id) {
+        Optional<DummyEntity> dummy = dummyEntityRepository.findById(id);
+
+		if (dummy.isPresent()) {
+			dummyEntityRepository.delete(dummy.get());
+		}
+		return dummy.isPresent();
+
 	}
 }

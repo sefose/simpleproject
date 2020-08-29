@@ -8,7 +8,9 @@ function DummyCreator() {
     const [name, setName] = useState("");
 
     const submit = () => {
+        console.log('name', name)
         saveDummy({name})
+        setName("")
     }
 
   return (
@@ -17,7 +19,7 @@ function DummyCreator() {
             <Form.Label>Name</Form.Label>
             <Form.Control type="text" placeholder="Enter Dummy name" value={name} onChange={e => setName(e.target.value)}></Form.Control>
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={submit}>Create</Button>
+        <Button variant="primary" onClick={submit}>Create</Button>
     </Form>
     );
 }

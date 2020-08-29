@@ -8,8 +8,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - 80:80
-    environment: 
-      REACT_APP_APIURL: simplebackend_spring:8080/
     depends_on:
       - simplebackend_spring
     networks:
@@ -48,20 +46,20 @@ services:
       MYSQL_PASSWORD: simpleapp
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - mysql-data:/var/lib/mysql
+      - db-data:/var/lib/mysql
     networks: 
       - backnet
   
-  # phpmyadmin:
-  #   container_name: phpmyadmin
-  #   image: phpmyadmin/phpmyadmin
-  #   ports:
-  #     - 8081:80
-  #   networks:
-  #     - backnet
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8081:80
+    networks:
+      - backnet
 
 volumes:
-  mysql-data:
+  db-data:
 
 networks:
   frontnet:

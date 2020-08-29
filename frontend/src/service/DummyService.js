@@ -1,5 +1,6 @@
 import axios from "axios";
-const URL = process.env.REACT_APP_APIURL + "dummy";
+const API_URL = process.env.REACT_APP_APIURL || 'http://localhost:8080/'
+const URL = API_URL + "dummy";
 
 export const findAllDummies = () => {
   return axios.get(URL);

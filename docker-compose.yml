@@ -4,7 +4,7 @@ services:
   simplefrontend:
     container_name: SimpleFrontend
     build:
-      context: simplefrontend
+      context: frontend
       dockerfile: Dockerfile
     ports:
       - 80:80
@@ -17,7 +17,7 @@ services:
   simplebackend_spring:
     container_name: simplebackend_spring
     build:
-      context: simplebackend_spring
+      context: backend
       dockerfile: Dockerfile
     ports:
       - "8080:8080"

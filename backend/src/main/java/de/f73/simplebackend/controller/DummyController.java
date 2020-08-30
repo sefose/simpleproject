@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.f73.simplebackend.DTO.DummyDto;
 import de.f73.simplebackend.service.DummyService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 /**
  * DummyController
@@ -47,6 +49,12 @@ public class DummyController {
 
         return ResponseEntity.notFound().build();
 
+    }
+
+    @PutMapping("/dummy")
+    public ResponseEntity<Void> updateDummy(@RequestBody DummyDto dummy) {
+        dummyService.update(dummy);
+        return ResponseEntity.ok().build();
     }
     
 }

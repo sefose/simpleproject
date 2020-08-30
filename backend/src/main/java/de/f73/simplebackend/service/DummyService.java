@@ -50,4 +50,8 @@ public class DummyService {
 		return dummy.isPresent();
 
 	}
+
+	public void update(DummyDto dummy) {
+        this.save(dummy);
+	}
 }

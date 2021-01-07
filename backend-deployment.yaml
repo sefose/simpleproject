@@ -1,0 +1,47 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - image: backend:0.0.1
+        imagePullPolicy: Never
+        name: backend
+        ports:
+        - containerPort: 8080
+          name: backend
+        env:
+          - name: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
+            value: org.hibernate.dialect.MySQL5InnoDBDialect
+          - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+            value: create
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:mysql://simpleapp-mysql:3306/simpleapp
+          - name: SPRING_DATASOURCE_USERNAME
+            value: simpleapp
+          - name: SPRING_DATASOURCE_PASSWORD
+            value: simpleapp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: backend

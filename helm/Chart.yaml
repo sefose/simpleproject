@@ -1,6 +1,6 @@
 apiVersion: v2
 name: simpleapp
-description: A Helm chart for Kubernetes
+description: A Helm chart for Kubernetes for the full simpleapp
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -29,3 +29,9 @@ dependencies:
   - name: backend
     version: 0.0.1
     repository: "file://../backend/helm"
+  - name: mysql
+    version: 8.x.x
+    repository: "https://charts.bitnami.com/bitnami"
+  - name: phpmyadmin
+    version: 5.x.x
+    repository: "https://charts.bitnami.com/bitnami"

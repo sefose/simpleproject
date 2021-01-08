@@ -1,0 +1,15 @@
+mysql:
+  image:
+    repository: mysql
+    tag: 5.6
+  auth:
+    rootPassword: root
+    datebase: simpleapp
+    username: simpleapp
+    password: simpleapp
+
+phpmyadmin:
+  service:
+    type: NodePort
+    nodePorts: 
+      http: 30005

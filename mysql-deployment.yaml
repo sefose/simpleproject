@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: simpleapp-mysql
+  name: simpleapp-test-mysql
   labels:
     app: simpleapp
 spec:
@@ -10,7 +10,6 @@ spec:
   selector:
     app: simpleapp
     tier: mysql
-  clusterIP: None
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -28,7 +27,7 @@ spec:
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: simpleapp-mysql
+  name: simpleapp-test-mysql
   labels:
     app: simpleapp
 spec:

@@ -5,5 +5,11 @@ dependencies:
 - name: backend
   repository: file://../backend/helm
   version: 0.0.1
-digest: sha256:6d4c643803e157c0cc3e317685f0cc3e2c47c2a7c96f73770309df13ac5233ef
-generated: "2021-01-08T13:49:51.052132+01:00"
+- name: mysql
+  repository: https://charts.bitnami.com/bitnami
+  version: 8.2.4
+- name: phpmyadmin
+  repository: https://charts.bitnami.com/bitnami
+  version: 5.0.6
+digest: sha256:36cc230c237353733a3405ee5455f4a0439d092936a3e0ba3be7056ae439c7fc
+generated: "2021-01-08T15:00:00.8618766+01:00"

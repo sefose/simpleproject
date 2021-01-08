@@ -16,12 +16,15 @@ spec:
         app: frontend
     spec:
       containers:
-      - image: simpleproject_simplefrontend:latest
+      - image: frontend:0.0.2
         imagePullPolicy: Never
         name: frontend
         ports:
         - containerPort: 80
           name: frontend
+        env:
+          - name: APIURL
+            value: backend
 ---
 apiVersion: v1
 kind: Service

@@ -41,7 +41,15 @@ metadata:
   labels:
     app: backend
 spec:
+  type: NodePort
   ports:
     - port: 8080
+      nodePort: 30003
   selector:
-    app: backend
+    app: frontend
+  # ports:
+  # - protocol: HTTP
+  #   port: 8080
+  #   targetPort: backend
+  # selector:
+  #   app: backend

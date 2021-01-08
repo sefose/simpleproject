@@ -16,8 +16,8 @@ spec:
         app: frontend
     spec:
       containers:
-      - image: frontend:0.0.2
-        imagePullPolicy: Never
+      - image: sefose/simpleapp-frontend:0.0.1
+        imagePullPolicy: IfNotPresent
         name: frontend
         ports:
         - containerPort: 80

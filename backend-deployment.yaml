@@ -16,8 +16,8 @@ spec:
         app: backend
     spec:
       containers:
-      - image: backend:0.0.1
-        imagePullPolicy: Never
+      - image: sefose/simpleapp-backend:0.0.1
+        imagePullPolicy: IfNotPresent
         name: backend
         ports:
         - containerPort: 8080

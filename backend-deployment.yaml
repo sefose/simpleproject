@@ -32,6 +32,7 @@ spec:
             value: simpleapp
           - name: SPRING_DATASOURCE_PASSWORD
             value: simpleapp
+        resources:
 ---
 apiVersion: v1
 kind: Service

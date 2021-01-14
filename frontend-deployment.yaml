@@ -24,6 +24,7 @@ spec:
         env:
           - name: APIURL
             value: http://kubernetes.docker.internal:30003
+        resources:
 ---
 apiVersion: v1
 kind: Service

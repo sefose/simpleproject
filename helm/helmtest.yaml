@@ -1,0 +1,326 @@
+---
+# Source: simpleapp/charts/frontend/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: RELEASE-NAME-frontend
+  labels:
+    helm.sh/chart: frontend-0.0.1
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.0.1"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: simpleapp/charts/mysql-helm/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: RELEASE-NAME-mysql-helm
+  labels:
+    helm.sh/chart: mysql-helm-0.0.1
+    app.kubernetes.io/name: mysql-helm
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "5.6"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: simpleapp/charts/backend/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: RELEASE-NAME-backend
+  labels:
+    helm.sh/chart: backend-0.0.1
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.0.1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: http
+      protocol: TCP
+      name: http
+      nodePort: 30003
+  selector:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/instance: RELEASE-NAME
+---
+# Source: simpleapp/charts/frontend/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: RELEASE-NAME-frontend
+  labels:
+    helm.sh/chart: frontend-0.0.1
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.0.1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+      nodePort: 30000
+  selector:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: RELEASE-NAME
+---
+# Source: simpleapp/charts/mysql-helm/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: RELEASE-NAME-mysql-helm
+  labels:
+    helm.sh/chart: mysql-helm-0.0.1
+    app.kubernetes.io/name: mysql-helm
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "5.6"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: mysql-helm
+    app.kubernetes.io/instance: RELEASE-NAME
+---
+# Source: simpleapp/charts/backend/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: RELEASE-NAME-backend
+  labels:
+    helm.sh/chart: backend-0.0.1
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.0.1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backend
+      app.kubernetes.io/instance: RELEASE-NAME
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: backend
+        app.kubernetes.io/instance: RELEASE-NAME
+    spec:
+      serviceAccountName: default
+      securityContext:
+        {}
+      containers:
+        - name: backend
+          securityContext:
+            {}
+          image: "sefose/simpleapp-backend:0.0.1"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
+              value: org.hibernate.dialect.MySQL5InnoDBDialect
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://simpleapp-mysql:3306/simpleapp
+            - name: SPRING_DATASOURCE_USERNAME
+              value: simpleapp
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: simpleapp
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+---
+# Source: simpleapp/charts/frontend/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: RELEASE-NAME-frontend
+  labels:
+    helm.sh/chart: frontend-0.0.1
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.0.1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: frontend
+      app.kubernetes.io/instance: RELEASE-NAME
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: frontend
+        app.kubernetes.io/instance: RELEASE-NAME
+    spec:
+      serviceAccountName: RELEASE-NAME-frontend
+      securityContext:
+        {}
+      containers:
+        - name: frontend
+          securityContext:
+            {}
+          image: "sefose/simpleapp-frontend:0.0.1"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+          - name: APIURL
+            value: http://kubernetes.docker.internal:30003
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+---
+# Source: simpleapp/charts/mysql-helm/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: RELEASE-NAME-mysql-helm
+  labels:
+    helm.sh/chart: mysql-helm-0.0.1
+    app.kubernetes.io/name: mysql-helm
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "5.6"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mysql-helm
+      app.kubernetes.io/instance: RELEASE-NAME
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mysql-helm
+        app.kubernetes.io/instance: RELEASE-NAME
+    spec:
+      serviceAccountName: RELEASE-NAME-mysql-helm
+      securityContext:
+        {}
+      containers:
+        - name: mysql-helm
+          securityContext:
+            {}
+          image: "mysql:5.6"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+          - name: MYSQL_DATABASE
+            value: simpleapp
+          - name: MYSQL_USER
+            value: simpleapp
+          - name: MYSQL_PASSWORD
+            value: simpleapp
+          - name: MYSQL_ROOT_PASSWORD
+            value: root
+          volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: mysql-persistent-storage
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: iscsi-pvc
+---
+# Source: simpleapp/charts/backend/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "RELEASE-NAME-backend-test-connection"
+  labels:
+    helm.sh/chart: backend-0.0.1
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.0.1"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['RELEASE-NAME-backend:8080']
+  restartPolicy: Never
+---
+# Source: simpleapp/charts/frontend/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "RELEASE-NAME-frontend-test-connection"
+  labels:
+    helm.sh/chart: frontend-0.0.1
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "0.0.1"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['RELEASE-NAME-frontend:80']
+  restartPolicy: Never
+---
+# Source: simpleapp/charts/mysql-helm/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "RELEASE-NAME-mysql-helm-test-connection"
+  labels:
+    helm.sh/chart: mysql-helm-0.0.1
+    app.kubernetes.io/name: mysql-helm
+    app.kubernetes.io/instance: RELEASE-NAME
+    app.kubernetes.io/version: "5.6"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['RELEASE-NAME-mysql-helm:3306']
+  restartPolicy: Never

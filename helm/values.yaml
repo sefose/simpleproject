@@ -1,4 +1,5 @@
 mysql:
+  enabled: true
   image:
     repository: mysql
     tag: 5.6
@@ -9,6 +10,7 @@ mysql:
     password: simpleapp
 
 phpmyadmin:
+  enabled: true
   service:
     type: NodePort
     nodePorts: 

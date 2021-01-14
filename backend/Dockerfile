@@ -1,4 +1,4 @@
-FROM maven:3.6.3-openjdk-8-slim as builder
+FROM maven:3.6.3-openjdk-11-slim as builder
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
@@ -14,7 +14,7 @@ COPY src src
 RUN mvn package -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-FROM openjdk:8-jre-alpine
+FROM openjdk:11.0.9.1-jre-slim-buster
 
 ARG DEPENDENCY=/app/target/dependency
 

@@ -5,17 +5,8 @@ dependencies:
 - name: backend
   repository: file://../backend/helm
   version: 0.0.1
-- name: mariadb-helm
-  repository: file://../mariadb-helm
-  version: 0.0.1
 - name: mysql-helm
   repository: file://../mysql-helm
   version: 0.0.1
-- name: mysql
-  repository: https://charts.bitnami.com/bitnami
-  version: 8.2.4
-- name: phpmyadmin
-  repository: https://charts.bitnami.com/bitnami
-  version: 5.0.6
-digest: sha256:410feb634acc5922a4c9f2015d4ce38a5557a98f8f82e946d16d4907d9fa68c8
-generated: "2021-01-14T14:35:53.668219+01:00"
+digest: sha256:38c16219acc3867de24d52906a6436689cd5fc69a86eb937f450fcf0a5a98213
+generated: "2021-01-15T13:44:02.568162+01:00"

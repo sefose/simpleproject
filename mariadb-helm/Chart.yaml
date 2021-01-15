@@ -1,6 +1,6 @@
 apiVersion: v2
-name: simpleapp
-description: A Helm chart for Kubernetes for the full simpleapp
+name: mariadb-helm
+description: A mariadb Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -20,28 +20,4 @@ version: 0.0.1
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
-appVersion: 0.0.1
-
-dependencies: 
-  - name: frontend
-    version: 0.0.1
-    repository: "file://../frontend/helm"
-  - name: backend
-    version: 0.0.1
-    repository: "file://../backend/helm"
-  - name: mariadb-helm
-    version: 0.0.1
-    repository: "file://../mariadb-helm"
-    condition: mariadb-helm.enabled
-  - name: mysql-helm
-    version: 0.0.1
-    repository: "file://../mysql-helm"
-    condition: mysql-helm.enabled
-  - name: mysql
-    version: 8.x.x
-    repository: "https://charts.bitnami.com/bitnami"
-    condition: mysql.enabled
-  - name: phpmyadmin
-    version: 5.x.x
-    repository: "https://charts.bitnami.com/bitnami"
-    condition: phpmyadmin.enabled
+appVersion: 10.5.8

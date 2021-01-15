@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: mysql
+  repository: mariadb
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "5.6"
+  tag: "10.5.8"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -27,6 +27,7 @@ env:
 volumeMounts:
 - name: mysql-persistent-storage
   mountPath: /var/lib/mysql
+  subPath: mysql
 
 volumes:
 - name: mysql-persistent-storage
@@ -47,13 +48,13 @@ podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-securityContext: {}
+securityContext:
   # capabilities:
   #   drop:
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+  runAsUser: 0
 
 service:
   type: ClusterIP

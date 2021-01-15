@@ -25,7 +25,7 @@ spec:
           name: frontend
         env:
           - name: APIURL
-            value: http://cln01:30003
+            value: http://zbox:30003
         resources:
 ---
 apiVersion: v1
@@ -35,9 +35,16 @@ metadata:
   labels:
     app: frontend
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 80
-      nodePort: 30000
+      targetPort: 80
   selector:
     app: frontend
+# spec:
+#   type: NodePort
+#   ports:
+#     - port: 80
+#       nodePort: 30000
+#   selector:
+#     app: frontend

@@ -6,7 +6,9 @@ metadata:
     app: backend
 spec:
   selector:
-    app: backend
+    matchLabels:
+      #extension says there is an error, but there is not!
+      app: backend
   strategy:
     type: Recreate
   template:

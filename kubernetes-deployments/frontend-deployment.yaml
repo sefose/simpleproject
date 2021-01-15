@@ -6,7 +6,9 @@ metadata:
     app: frontend
 spec:
   selector:
-    app: frontend
+    matchLabels:
+      #extension says there is an error, but there is not!
+      app: frontend
   strategy:
     type: Recreate
   template:
@@ -23,7 +25,7 @@ spec:
           name: frontend
         env:
           - name: APIURL
-            value: http://kubernetes.docker.internal:30003
+            value: http://cln01:30003
         resources:
 ---
 apiVersion: v1

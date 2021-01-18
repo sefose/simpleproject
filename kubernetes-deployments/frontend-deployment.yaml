@@ -25,7 +25,7 @@ spec:
           name: frontend
         env:
           - name: APIURL
-            value: http://zbox:30003
+            value: "http://192.168.0.200/api"
         resources:
 ---
 apiVersion: v1

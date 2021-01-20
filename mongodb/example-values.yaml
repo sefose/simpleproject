@@ -7,7 +7,6 @@ persistence:
 volumePermissions:
   enabled: true
 auth:
-  rootPassword: root
+  existingSecret: mongodb-auth
   username: simpleapp
-  password: simpleapp
   database: simpleapp

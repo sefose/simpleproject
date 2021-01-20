@@ -17,24 +17,26 @@ spec:
         app: backend
     spec:
       containers:
-      - image: sefose/simpleapp-backend:0.0.1
+      - image: sefose/simpleapp-backend:mongodb-0.0.1
         imagePullPolicy: IfNotPresent
         name: backend
         ports:
         - containerPort: 8080
           name: backend
         env:
-          - name: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
-            value: org.hibernate.dialect.MySQL5InnoDBDialect
-          - name: SPRING_JPA_HIBERNATE_DDL_AUTO
-            value: create
-          - name: SPRING_DATASOURCE_URL
-            value: jdbc:mysql://simpleapp-mysql:3306/simpleapp
-          - name: SPRING_DATASOURCE_USERNAME
+          - name: SPRING_DATA_MONGODB_DATABASE
             value: simpleapp
-          - name: SPRING_DATASOURCE_PASSWORD
+          - name: SPRING_DATA_MONGODB_HOST
+            value: mongodb
+          - name: SPRING_DATA_MONGODB_PORT
+            value: "27017"
+          - name: SPRING_DATA_MONGODB_USERNAME
+            value: simpleapp
+          - name: SPRING_DATA_MONGODB_PASSWORD
             value: simpleapp
         resources:
+
+        # spring.data.mongodb.authentication-database=admin
 ---
 apiVersion: v1
 kind: Service

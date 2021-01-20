@@ -49,9 +49,3 @@ spec:
       targetPort: 8080
   selector:
     app: backend
-  # ports:
-  # - protocol: TCP
-  #   port: 8080
-  #   targetPort: backend
-  # selector:
-  #   app: backend

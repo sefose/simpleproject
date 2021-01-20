@@ -25,7 +25,7 @@ spec:
           name: frontend
         env:
           - name: APIURL
-            value: http://cln01:30003
+            value: "http://192.168.0.200/api"
         resources:
 ---
 apiVersion: v1
@@ -35,9 +35,9 @@ metadata:
   labels:
     app: frontend
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 80
-      nodePort: 30000
+      targetPort: 80
   selector:
     app: frontend

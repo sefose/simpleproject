@@ -25,15 +25,30 @@ spec:
           name: backend
         env:
           - name: SPRING_DATA_MONGODB_DATABASE
-            value: simpleapp
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-auth
+                key: database
           - name: SPRING_DATA_MONGODB_HOST
-            value: mongodb
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-auth
+                key: host
           - name: SPRING_DATA_MONGODB_PORT
-            value: "27017"
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-auth
+                key: port
           - name: SPRING_DATA_MONGODB_USERNAME
-            value: simpleapp
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-auth
+                key: username
           - name: SPRING_DATA_MONGODB_PASSWORD
-            value: simpleapp
+            valueFrom:
+              secretKeyRef:
+                name: mongodb-auth
+                key: mongodb-password
         resources:
 
         # spring.data.mongodb.authentication-database=admin

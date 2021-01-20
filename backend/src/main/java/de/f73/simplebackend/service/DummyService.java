@@ -41,7 +41,7 @@ public class DummyService {
 		return dummyEntityRepository.findAll().stream().map(this::getDummyDtoFrom).collect(Collectors.toList());
 	}
 
-	public boolean delete(Long id) {
+	public boolean delete(String id) {
         Optional<DummyEntity> dummy = dummyEntityRepository.findById(id);
 
 		if (dummy.isPresent()) {

@@ -28,7 +28,7 @@ public class DummyController {
     
     @GetMapping("/")
     public ResponseEntity<String> justSlash() {
-        return new ResponseEntity<>("Danke Hendrik",HttpStatus.OK);
+        return new ResponseEntity<>("You have reached the Backend - please use the defined endpoints! PS: Thanks Hendrik!",HttpStatus.OK);
     }
     @PostMapping("/dummy")
     public ResponseEntity<DummyDto> createDummy(@RequestBody DummyDto dummyDTO) {
@@ -42,7 +42,7 @@ public class DummyController {
     }
 
     @DeleteMapping("/dummy/{id}")
-    public ResponseEntity<Void> deleteDummy(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDummy(@PathVariable String id) {
         if (dummyService.delete(id)) {
             return ResponseEntity.noContent().build();
         }

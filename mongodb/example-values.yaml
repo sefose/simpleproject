@@ -1,7 +1,11 @@
 #use with:
 # helm install mongodb bitnami/mongodb -n simpleapp -f thisFile.yaml
-global:
-  storageClass: managed-nfs-storage
+# global:
+#   storageClass: managed-nfs-storage
+persistence:
+  existingClaim: mongodb-pv-claim
+volumePermissions:
+  enabled: true
 auth:
   rootPassword: root
   username: simpleapp

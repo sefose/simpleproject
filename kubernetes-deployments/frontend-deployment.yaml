@@ -25,7 +25,7 @@ spec:
           name: frontend
         env:
           - name: APIURL
-            value: "http://192.168.0.200/api"
+            value: "http://192.168.178.220/api"
         resources:
 ---
 apiVersion: v1
@@ -41,3 +41,22 @@ spec:
       targetPort: 80
   selector:
     app: frontend
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: simpleapp-frontend-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
